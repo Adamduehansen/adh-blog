@@ -9,7 +9,8 @@ blog({
   // header: <header>Your custom header</header>,
   // section: <section>Your custom section</section>,
   // footer: <footer>Your custom footer</footer>,
-  avatar: 'pb.png',
+  avatar:
+    'https://raw.githubusercontent.com/Adamduehansen/adh-blog/main/pb.PNG',
   avatarClass: 'rounded-full',
   author: 'Adam Due Hansen',
 
