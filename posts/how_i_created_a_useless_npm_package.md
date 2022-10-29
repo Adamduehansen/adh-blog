@@ -1,6 +1,6 @@
 ---
 title: How I Created a Useless NPM package
-publish_date: 2022-10-25
+publish_date: 2022-10-29
 ---
 
 This year I made it a new year's resolution to create and publish my own node module to NPM. It didn't have to be anything groundbreaking or revolutionary. The goal of this project was to **learn how to create and publish a module to NPM**, and hopefully learn some new JavaScript aswell along the way. I wanted the project to be supported by these features:
