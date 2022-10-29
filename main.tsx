@@ -13,7 +13,11 @@ blog({
     'https://raw.githubusercontent.com/Adamduehansen/adh-blog/main/pb.PNG',
   avatarClass: 'rounded-full',
   author: 'Adam Due Hansen',
-
+  links: [
+    { title: "Email", url: "mailto:adamduehan@gmail.com" },
+    { title: "GitHub", url: "https://github.com/adamduehansen" }, 
+  ]
+  
   // middlewares: [
 
   // If you want to set up Google Analytics, paste your GA key here.
