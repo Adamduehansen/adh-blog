@@ -26,4 +26,6 @@ Looks good! But now that we're at it - why not expand our component? Let's say w
 ```
 
 But while writing this test we realize something: *How are we going to make the fetch call inside our component return an empty list? We have no control over the external service. That's a bummer!* 
-A quick search on Google for "jest fetch" shows us that we could either use an NPM package or override the global.fetch function. That seems like a lot of work to achieve somehing simple. Therefore I'm going to show you a very simple way that enables us to manipulate our component to our liking.
+
+A quick search on Google for "jest fetch" shows us that we could either use an NPM package or override the global.fetch function. That seems like a lot of work to achieve somehing simple. Therefore I'm going to show you a very simple way that enables us to manipulate our component to our liking. This can be done using dependency injection with useContext.
+
