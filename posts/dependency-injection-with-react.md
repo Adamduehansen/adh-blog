@@ -8,11 +8,13 @@ I'm going to assume that you already know about how dependency injection in gene
 Consider the following example where we want to create a component that lists a set of users. One way of doing this could be to write the component like this:
 
 ```javascript
-function UserList() {
+// components/UserList.tsx
+
+function UserList(): JSX.element {
   const [users, setUsers] = useState<User[]>([]);
 
-  useEffect(() => {
-    async function fetchUsers() {
+  useEffect((): void => {
+    async function fetchUsers(): Promise<void> {
       const response = await fetch(
         'https://jsonplaceholder.typicode.com/users'
       );
@@ -23,7 +25,7 @@ function UserList() {
     fetchUsers();
   }, []);
 
-  const userList = users.map((user) => {
+  const userList = users.map((user): React.ReactNode => {
     return (
       <ul>
         <li key={user.id}>
@@ -45,8 +47,10 @@ function UserList() {
 As a starting point, the above example is a great way to achieve our goal. As good developers we want to write a unit tests for our component. With Vitest and React Testing Library that one could look like this:
 
 ```javascript
-describe('UserList', () => {
-  test('should first', () => {
+// components/UserList.test.tsx
+
+describe('UserList', (): void => {
+  test('should first', (): void => {
     // Arrange
     render(<UserList />);
 
@@ -83,8 +87,33 @@ interface UserServiceContextProps {
   getUsers: () => Promise<User[]>
 }
 
-export default createContext<UserServiceContextProps>({
+const userServiceContext = createContext<UserServiceContextProps>({
   getUsers: () => []
-})
+});
+
+export default UserServiceContext;
 ```
 
+Now add a component that can act as a provider for the context.
+
+```javascript
+// lib/UserServiceProvider.tsx
+
+import { useContext } from "react";
+import UserServiceContext from "../contexts/UserServiceContext";
+import { getUsers } from "../services/userService";
+
+function UserServiceProvider(
+  children: React.ReactNode
+): JSX.element {
+  const UserServiceContext = useContext(UserServiceContext);
+  
+  return (
+    <UserServiceContext.Provider value={{
+      getUsers: getUsers
+    }}>
+      { children }
+    </UserServiceContext.Provider>
+  );
+}
+```
