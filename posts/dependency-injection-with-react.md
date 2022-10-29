@@ -61,8 +61,10 @@ describe('UserList', () => {
 
 But running this test gives we get an error: `ReferenceError: fetch is not defined`. A quick search on Google for "vitest fetch" shows us that we could either use an NPM package or override the global.fetch function. That seems like a lot of work to achieve somehing that should be quite simple. Therefore I'm going to show you a very simple way that enables us to manipulate our component to our liking. This can be done using dependency injection with useContext.
 
-Lets start by adding a new file for the service part "userService.ts":
+Lets start by adding a new file for the service functions:
 ```javascript
+// services/userService.ts
+
 export async function getUsers(): Promise<User[]> {
   const response = await fetch("");
   const json = await response.json();
@@ -70,4 +72,19 @@ export async function getUsers(): Promise<User[]> {
 }
 ```
 
-Now add a new file for a React context for the user service.
+Now add a new file for a React context for the user service:
+
+```javascript
+// contexts/UserServiceContext.ts
+
+import { createContext } from "react";
+
+interface UserServiceContextProps {
+  getUsers: () => Promise<User[]>
+}
+
+export default createContext<UserServiceContextProps>({
+  getUsers: () => []
+})
+```
+
