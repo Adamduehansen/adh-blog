@@ -1,5 +1,5 @@
 ---
-title: How I Created a Useless NPM package
+title: How I Published a Useless Node Module To NPM
 publish_date: 2022-10-29
 ---
 
