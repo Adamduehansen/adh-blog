@@ -42,7 +42,7 @@ function UserList() {
 }
 ```
 
-As a starting point, the above example is a great way to achieve our goal. But let's say that we want to write unit tests for our component. With Vitest and React Testing Library that one could look like this:
+As a starting point, the above example is a great way to achieve our goal. As good developers we want to write a unit tests for our component. With Vitest and React Testing Library that one could look like this:
 
 ```javascript
 describe('UserList', () => {
@@ -59,4 +59,15 @@ describe('UserList', () => {
 });
 ```
 
-But running this test gives we get an error: `ReferenceError: fetch is not defined`. A quick search on Google for "vitest fetch" shows us that we could either use an NPM package or override the global.fetch function. That seems like a lot of work to achieve somehing simple. Therefore I'm going to show you a very simple way that enables us to manipulate our component to our liking. This can be done using dependency injection with useContext.
+But running this test gives we get an error: `ReferenceError: fetch is not defined`. A quick search on Google for "vitest fetch" shows us that we could either use an NPM package or override the global.fetch function. That seems like a lot of work to achieve somehing that should be quite simple. Therefore I'm going to show you a very simple way that enables us to manipulate our component to our liking. This can be done using dependency injection with useContext.
+
+Lets start by adding a new file for the service part "userService.ts":
+```javascript
+export async function getUsers(): Promise<User[]> {
+  const response = await fetch("");
+  const json = await response.json();
+  return json as User[];
+}
+```
+
+Now add a new file for a React context for the user service.
