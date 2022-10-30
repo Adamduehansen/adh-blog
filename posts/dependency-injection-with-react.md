@@ -117,3 +117,11 @@ function UserServiceProvider(
   );
 }
 ```
+
+Now go back to our UserList component and lets make a few changes:
+
+```javascript
+// Updates example with UserServiceContext
+```
+
+The component now consumes our UserServiceContext to fetch the list of users, and the component should render the list of users as before.
