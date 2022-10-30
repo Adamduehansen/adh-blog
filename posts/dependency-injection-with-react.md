@@ -10,7 +10,7 @@ Consider the following example where we want to create a component that lists a 
 ```javascript
 // components/UserList.tsx
 
-function UserList(): JSX.element {
+function UserList(): JSX.Element {
   const [users, setUsers] = useState<User[]>([]);
 
   useEffect((): void => {
@@ -81,14 +81,12 @@ Now add a new file for a React context for the user service:
 ```javascript
 // contexts/UserServiceContext.ts
 
-import { createContext } from "react";
-
 interface UserServiceContextProps {
   getUsers: () => Promise<User[]>
 }
 
-const userServiceContext = createContext<UserServiceContextProps>({
-  getUsers: () => []
+const UserServiceContext = createContext<UserServiceContextProps>({
+  getUsers: async () => []
 });
 
 export default UserServiceContext;
@@ -99,23 +97,19 @@ Now add a component that can act as a provider for the context.
 ```javascript
 // lib/UserServiceProvider.tsx
 
-import { useContext } from "react";
-import UserServiceContext from "../contexts/UserServiceContext";
-import { getUsers } from "../services/userService";
-
-function UserServiceProvider(
-  children: React.ReactNode
-): JSX.element {
-  const UserServiceContext = useContext(UserServiceContext);
-  
+function UserServiceProvider(children: React.ReactNode): JSX.Element {
   return (
-    <UserServiceContext.Provider value={{
-      getUsers: getUsers
-    }}>
-      { children }
+    <UserServiceContext.Provider
+      value={{
+        getUsers: getUsers,
+      }}
+    >
+      {children}
     </UserServiceContext.Provider>
   );
 }
+
+export default UserServiceProvider;
 ```
 
 Now go back to our UserList component and lets make a few changes:
