@@ -63,7 +63,7 @@ describe('UserList', (): void => {
 });
 ```
 
-But running this test gives we get an error: `ReferenceError: fetch is not defined`. A quick search on Google for "vitest fetch" shows us that we could either use an NPM package or override the global.fetch function. That seems like a lot of work to achieve somehing that should be quite simple. Therefore I'm going to show you a very simple way that enables us to manipulate our component to our liking. This can be done using dependency injection with useContext.
+But running this test gives we get an error: `ReferenceError: fetch is not defined`. A quick search on Google for "vitest fetch" shows us that one solution could be to use an NPM package. I don't think that the propper solution is an NPM package. My main proplem is that we use `fetch` inside the component. Therefore I'm going to show you a very simple way that enables us to rewrite our component to give us more control. This can be done using dependency injection with useContext.
 
 Lets start by adding a new file for the service functions:
 ```javascript
@@ -121,7 +121,30 @@ function UserServiceProvider(
 Now go back to our UserList component and lets make a few changes:
 
 ```javascript
-// Updates example with UserServiceContext
+// Updated example component with UserServiceContext
 ```
 
-The component now consumes our UserServiceContext to fetch the list of users, and the component should render the list of users as before.
+The component now consumes the `UserServiceContext` to fetch the list of users. But we need to provide our implementation of  `UserServiceContext` somewhere in the component tree. Lets do that at the root of the application:
+
+```javascript
+// Updated example from main.tsx
+```
+
+The application should now fetch and render the list of users again. We can now revisit the test case and make a custom implementation of `UserServiceContext`:
+
+```javascript
+// Updated example of the test.
+```
+
+Our test now succeeds. Let's take a look at the full flexibility of our dependency injection. Let's add another two tests for:
+1. render a message if the user list is empty.
+2. render a message if the service threw an exception.
+
+```javascript
+// Updated test case with two new tests
+```
+
+Why is this better than mocking the fetch function? In my opinion
+- Enforces us to separate business layer and view layer which makes our components much more clean.
+- Is simpler and closer to the test. One can look down through the test case and read exactly what is the intention is.
+- Does not leave a tests with mocks that needs to be cleaned.
