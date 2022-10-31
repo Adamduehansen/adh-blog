@@ -45,8 +45,6 @@ function UserList(): JSX.Element {
     </div>
   );
 }
-
-export default UserList;
 ```
 
 As a starting point, the above example is a great way to achieve our goal. As good developers we want to write a unit test for our component. With Vitest and React Testing Library that one could look like this:
@@ -91,8 +89,6 @@ interface UserServiceContextProps {
 const UserServiceContext = createContext<UserServiceContextProps>({
   getUsers: async () => [],
 });
-
-export default UserServiceContext;
 ```
 
 Now add a component that can act as a provider for the context.
@@ -113,8 +109,6 @@ function UserServiceProvider({
     </UserServiceContext.Provider>
   );
 }
-
-export default UserServiceProvider;
 ```
 
 Now go back to our UserList component and lets make a few changes:
@@ -155,8 +149,6 @@ function UserList(): JSX.Element {
     </div>
   );
 }
-
-export default UserList;
 ```
 
 The component now consumes the `UserServiceContext` to fetch the list of users. But we need to provide our implementation of  `UserServiceContext` somewhere in the component tree. Lets do that at the root of the application:
@@ -306,8 +298,6 @@ function UserList(): JSX.Element {
     </div>
   );
 }
-
-export default UserList;
 ```
 
 Tests are now running and we've done some throughout testing of our component
@@ -322,3 +312,4 @@ Why is this better than mocking the fetch function? In my opinion:
 - It enforces us to separate business layer and view layer which makes our components much more clean.
 - It is simpler and closer to the test. One can look down through the test case and read exactly what is the intention is.
 - It does not leave a tests with mocks that needs to be cleaned.
+- Does not require you to install NPM packages.
