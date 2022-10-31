@@ -8,7 +8,7 @@ I'm going to assume two things:
 - that you already know about how dependency injection in general works.
 - how React Context and the useContext hook works.
 
-If you would like to just view the code, here is a link to the Github repo.
+If you would like to just view the code, here is a link to the [Github repo](https://github.com/Adamduehansen/adh-blog/tree/draft/examples/dependency-injection).
 
 Consider the following example where we want a component to list a set of users. One way of doing this could be to write the component like this:
 
