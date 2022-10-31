@@ -2,8 +2,13 @@
 title: Dependency Injection With React And How It Can Greatly Affect Your Code Quality
 publish_date: 0000-00-00
 ---
+In this post I'm going to show you how dependency injection can be achieved with React and how it can benefit the quality of your code.
 
-I'm going to assume that you already know about how dependency injection in general works. In this post I'm going to show you how dependency injection can be achieved with React and how it can benefit the quality of your code. If you would like to just view the code, here is a link to the Github repo.
+I'm going to assume two things:
+- that you already know about how dependency injection in general works.
+- how React Context and the useContext hook works.
+
+If you would like to just view the code, here is a link to the Github repo.
 
 Consider the following example where we want a component to list a set of users. One way of doing this could be to write the component like this:
 
@@ -313,3 +318,36 @@ Why is this better than mocking the fetch function? In my opinion:
 - It is simpler and closer to the test. One can look down through the test case and read exactly what is the intention is.
 - It does not leave a tests with mocks that needs to be cleaned.
 - Does not require you to install NPM packages.
+
+You can also use this for the stories in your Storybook files. Consider this story for our component:
+
+```javascript
+// src/compoents/UserList.stories.tsx
+
+export const Default: ComponentStory<typeof UserList> = function () {
+  async function getUsers(): Promise<User[]> {
+    return [
+      {
+        id: 1,
+        username: 'Jane Doe',
+      },
+      {
+        id: 2,
+        username: 'John Smith',
+      },
+    ];
+  }
+
+  return (
+    <UserServiceContext.Provider
+      value={{
+        getUsers: getUsers,
+      }}
+    >
+      <UserList />
+    </UserServiceContext.Provider>
+  );
+};
+```
+
+This story does not care if there is a service to call. Even if the server should one day be unavailable, this story can still be viewed by other developers.
