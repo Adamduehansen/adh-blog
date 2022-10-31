@@ -3,7 +3,7 @@ title: Dependency Injection With React And How It Can Greatly Affect Your Code Q
 publish_date: 0000-00-00
 ---
 
-I'm going to assume that you already know about how dependency injection in general works. In this post I'm going to show you how dependency injection can be achieved with React and how it can benefit the quality of your code. If you want a TL;DR, here is a link to the Github repo.
+I'm going to assume that you already know about how dependency injection in general works. In this post I'm going to show you how dependency injection can be achieved with React and how it can benefit the quality of your code. If you would like to just view the code, here is a link to the Github repo.
 
 Consider the following example where we want a component to list a set of users. One way of doing this could be to write the component like this:
 
