@@ -10,7 +10,9 @@ I'm going to assume two things:
 
 If you would like to just view the code, here is a link to the [Github repo](https://github.com/Adamduehansen/adh-blog/tree/draft/examples/dependency-injection).
 
-Consider the following example where we want a component to list a set of users. One way of doing this could be to write the component like this:
+***
+
+Imagine that we want a component that renders a list of users fetched from a web service. One way of doing this could be to write the component like this:
 
 ```javascript
 // src/components/UserList.tsx
