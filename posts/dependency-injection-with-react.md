@@ -165,7 +165,7 @@ function UserList(): JSX.Element {
 }
 ```
 
-The component now consumes the `UserServiceContext` to fetch the list of users. But we need to provide our implementation of  `UserServiceContext` somewhere in the component tree. Lets do that at the root of the application:
+The component now uses our custom hook `useUserServiceClient`. From this hook we can call `getUsers`. We also need to provide a client to   `UserServiceClientProvider` somewhere in the component tree. Lets do that at the root of the application:
 
 ```javascript
 // src/main.tsx
