@@ -88,7 +88,7 @@ export async function getUsers(): Promise<User[]> {
 }
 ```
 
-Now add a new file for a React context for the user service:
+Now add a new file. This file is going to contain a few interesting things:
 
 ```javascript
 // src/contexts/UserServiceContext.ts
@@ -105,20 +105,33 @@ const UserServiceContext = createContext<UserServiceContextProps>({
 Now add a component that can act as a provider for the context.
 
 ```javascript
-// src/lib/UserServiceProvider.tsx
+// src/lib/UserServiceClientProvider.tsx
 
-function UserServiceProvider({
+interface UserServiceContextProps {
+  getUsers: () => Promise<User[]>;
+}
+
+const UserServiceContext = createContext<UserServiceContextProps>({
+  getUsers: async () => [],
+});
+
+interface UserServiceClientProviderProps extends PropsWithChildren {
+  client: UserServiceContextProps;
+}
+
+export default function UserServiceClientProvider({
   children,
-}: React.PropsWithChildren): JSX.Element {
+  client,
+}: UserServiceClientProviderProps): JSX.Element {
   return (
-    <UserServiceContext.Provider
-      value={{
-        getUsers: getUsers,
-      }}
-    >
+    <UserServiceContext.Provider value={client}>
       {children}
     </UserServiceContext.Provider>
   );
+}
+
+export function useUserServiceClient() {
+  return useContext(UserServiceContext);
 }
 ```
 
@@ -129,7 +142,7 @@ Now go back to our UserList component and lets make a few changes:
 
 function UserList(): JSX.Element {
   const [users, setUsers] = useState<User[]>([]);
-  const { getUsers } = useContext(UserServiceContext);
+  const { getUsers } = useUserServiceClient();
 
   useEffect((): void => {
     async function fetchUsers(): Promise<void> {
@@ -167,11 +180,18 @@ The component now consumes the `UserServiceContext` to fetch the list of users. 
 ```javascript
 // src/main.tsx
 
+import { getUsers } from './services/userService';
+
+
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <UserServiceProvider>
+    <UserServiceClientProvider
+      client={{
+        getUsers: getUsers,
+      }}
+    >
       <UserList />
-    </UserServiceProvider>
+    </UserServiceClientProvider>
   </React.StrictMode>
 );
 ```
@@ -193,13 +213,13 @@ test('should render a list of users from service', async (): Promise<void> => {
   }
 
   render(
-    <UserServiceContext.Provider
-      value={{
+    <UserServiceClientProvider
+      client={{
         getUsers: mockGetUsers,
       }}
     >
       <UserList />
-    </UserServiceContext.Provider>
+    </UserServiceClientProvider>
   );
 
   // Act
@@ -224,13 +244,13 @@ test('should render info message if no users were found', async (): Promise<void
   }
 
   render(
-    <UserServiceContext.Provider
-      value={{
+    <UserServiceClientProvider
+      client={{
         getUsers: mockGetUsers,
       }}
     >
       <UserList />
-    </UserServiceContext.Provider>
+    </UserServiceClientProvider>
   );
 
   // Act
@@ -247,13 +267,13 @@ test('should render alert if service threw an error', async (): Promise<void> =>
   }
 
   render(
-    <UserServiceContext.Provider
-      value={{
+    <UserServiceClientProvider
+      client={{
         getUsers: mockGetUsers,
       }}
     >
       <UserList />
-    </UserServiceContext.Provider>
+    </UserServiceClientProvider>
   );
 
   // Act
@@ -270,7 +290,7 @@ The updated component now looks like this:
 function UserList(): JSX.Element {
   const [users, setUsers] = useState<User[]>([]);
   const [error, setError] = useState<string>();
-  const { getUsers } = useContext(UserServiceContext);
+  const { getUsers } = useUserServiceClient();
 
   useEffect((): void => {
     async function fetchUsers(): Promise<void> {
@@ -347,13 +367,13 @@ export const Default: ComponentStory<typeof UserList> = function () {
   }
 
   return (
-    <UserServiceContext.Provider
-      value={{
+    <UserServiceClientProvider
+      client={{
         getUsers: getUsers,
       }}
     >
       <UserList />
-    </UserServiceContext.Provider>
+    </UserServiceClientProvider>
   );
 };
 ```
