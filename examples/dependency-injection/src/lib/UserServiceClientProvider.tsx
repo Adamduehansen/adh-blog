@@ -24,7 +24,7 @@ function UserServiceClientProvider({
   );
 }
 
-export function useUserServiceClient() {
+export function useUserServiceClient(): UserServiceClient {
   return useContext(UserServiceContext);
 }
 
