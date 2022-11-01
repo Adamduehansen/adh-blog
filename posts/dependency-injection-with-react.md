@@ -91,32 +91,18 @@ export async function getUsers(): Promise<User[]> {
 Now add a new file. This file is going to contain a few interesting things:
 
 ```javascript
-// src/contexts/UserServiceContext.ts
-
-interface UserServiceContextProps {
-  getUsers: () => Promise<User[]>;
-}
-
-const UserServiceContext = createContext<UserServiceContextProps>({
-  getUsers: async () => [],
-});
-```
-
-Now add a component that can act as a provider for the context.
-
-```javascript
 // src/lib/UserServiceClientProvider.tsx
 
-interface UserServiceContextProps {
+interface UserServiceClient {
   getUsers: () => Promise<User[]>;
 }
 
-const UserServiceContext = createContext<UserServiceContextProps>({
+const UserServiceClientContext = createContext<UserServiceClient>({
   getUsers: async () => [],
 });
 
 interface UserServiceClientProviderProps extends PropsWithChildren {
-  client: UserServiceContextProps;
+  client: UserServiceClient;
 }
 
 export default function UserServiceClientProvider({
@@ -124,16 +110,20 @@ export default function UserServiceClientProvider({
   client,
 }: UserServiceClientProviderProps): JSX.Element {
   return (
-    <UserServiceContext.Provider value={client}>
+    <UserServiceClientContext.Provider value={client}>
       {children}
-    </UserServiceContext.Provider>
+    </UserServiceClientContext.Provider>
   );
 }
 
 export function useUserServiceClient() {
-  return useContext(UserServiceContext);
+  return useContext(UserServiceClientContext);
 }
 ```
+
+1. `UserServiceClientContext` is a React Context which contains the client of our service. The client should implement functions that are needed by our components.
+2. `UserServiceClientProvider` is a component that takes a client and exposes it as a provider.
+3. `useUserServiceClient` is a hook that uses the `UserServiceClientContext` context.
 
 Now go back to our UserList component and lets make a few changes:
 
@@ -181,7 +171,6 @@ The component now consumes the `UserServiceContext` to fetch the list of users. 
 // src/main.tsx
 
 import { getUsers } from './services/userService';
-
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>

@@ -1,16 +1,16 @@
 import { createContext, PropsWithChildren, useContext } from 'react';
 import User from '../User';
 
-interface UserServiceContextProps {
+interface UserServiceClient {
   getUsers: () => Promise<User[]>;
 }
 
-const UserServiceContext = createContext<UserServiceContextProps>({
+const UserServiceContext = createContext<UserServiceClient>({
   getUsers: async () => [],
 });
 
 interface UserServiceClientProviderProps extends PropsWithChildren {
-  client: UserServiceContextProps;
+  client: UserServiceClient;
 }
 
 function UserServiceClientProvider({
