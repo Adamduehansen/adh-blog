@@ -185,7 +185,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 );
 ```
 
-The application should now fetch and render the list of users again. We can now revisit the test case and make a custom implementation of `UserServiceContext`:
+The application should now fetch and render the list of users again. We can now revisit the test case and make a custom implementation of a client to the  `UserServiceClientProvider`:
 
 ```javascript
 // src/components/UserList.test.tsx
@@ -219,9 +219,9 @@ test('should render a list of users from service', async (): Promise<void> => {
 });
 ```
 
-Our test now succeeds. Let's take a look at the full flexibility of our dependency injection. Let's add another two tests for:
-1. render a message if the user list is empty.
-2. render a message if the service threw an exception.
+Our test now succeeds. Let's take a look at the full flexibility of our dependency injection. Let's add another two tests to ensure that our component:
+1. renders a message if the list of users is empty.
+2. renders a message if the service threw an exception.
 
 ```javascript
 // src/components/UserList.test.tsx
