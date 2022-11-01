@@ -1,6 +1,6 @@
-import { act, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { describe, expect, test } from 'vitest';
-import UserServiceContext from '../contexts/UserServiceContext';
+import UserServiceClientProvider from '../lib/UserServiceClientProvider';
 import User from '../User';
 import UserList from './UserList';
 
@@ -17,13 +17,13 @@ describe('UserList', (): void => {
     }
 
     render(
-      <UserServiceContext.Provider
-        value={{
+      <UserServiceClientProvider
+        client={{
           getUsers: mockGetUsers,
         }}
       >
         <UserList />
-      </UserServiceContext.Provider>
+      </UserServiceClientProvider>
     );
 
     // Act
@@ -40,13 +40,13 @@ describe('UserList', (): void => {
     }
 
     render(
-      <UserServiceContext.Provider
-        value={{
+      <UserServiceClientProvider
+        client={{
           getUsers: mockGetUsers,
         }}
       >
         <UserList />
-      </UserServiceContext.Provider>
+      </UserServiceClientProvider>
     );
 
     // Act
@@ -63,13 +63,13 @@ describe('UserList', (): void => {
     }
 
     render(
-      <UserServiceContext.Provider
-        value={{
+      <UserServiceClientProvider
+        client={{
           getUsers: mockGetUsers,
         }}
       >
         <UserList />
-      </UserServiceContext.Provider>
+      </UserServiceClientProvider>
     );
 
     // Act

@@ -1,11 +1,11 @@
-import { useEffect, useState, useContext } from 'react';
-import UserServiceContext from '../contexts/UserServiceContext';
+import { useEffect, useState } from 'react';
+import { useUserServiceClient } from '../lib/UserServiceClientProvider';
 import type User from '../User';
 
 function UserList(): JSX.Element {
   const [users, setUsers] = useState<User[]>([]);
   const [error, setError] = useState<string>();
-  const { getUsers } = useContext(UserServiceContext);
+  const { getUsers } = useUserServiceClient();
 
   useEffect((): void => {
     async function fetchUsers(): Promise<void> {

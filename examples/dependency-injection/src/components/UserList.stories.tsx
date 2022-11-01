@@ -1,5 +1,5 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import UserServiceContext from '../contexts/UserServiceContext';
+import UserServiceClientProvider from '../lib/UserServiceClientProvider';
 import User from '../User';
 import UserList from './UserList';
 
@@ -23,12 +23,12 @@ export const Default: ComponentStory<typeof UserList> = function () {
   }
 
   return (
-    <UserServiceContext.Provider
-      value={{
+    <UserServiceClientProvider
+      client={{
         getUsers: getUsers,
       }}
     >
       <UserList />
-    </UserServiceContext.Provider>
+    </UserServiceClientProvider>
   );
 };
