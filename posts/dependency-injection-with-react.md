@@ -5,12 +5,14 @@ publish_date: 0000-00-00
 In this post I'm going to show you how dependency injection can be achieved with React and how it can benefit the quality of your code.
 
 I'm going to assume two things:
-- that you already know about how dependency injection in general works.
-- how React Context and the useContext hook works.
+1. that you already know what dependency injection is
+2. how React Context and the useContext hook works
 
-If you would like to just view the code, here is a link to the Github repo.
+If you would like to just view the code, here is a link to the [example Github repo](https://github.com/Adamduehansen/adh-blog/tree/draft/examples/dependency-injection).
 
-Consider the following example where we want a component to list a set of users. One way of doing this could be to write the component like this:
+***
+
+Imagine that we want a component that renders a list of users fetched from a web service. One way of doing this could be to write the component like this:
 
 ```javascript
 // src/components/UserList.tsx
@@ -52,7 +54,7 @@ function UserList(): JSX.Element {
 }
 ```
 
-As a starting point, the above example is a great way to achieve our goal. As good developers we want to write a unit test for our component. With Vitest and React Testing Library that one could look like this:
+As a starting point, the above example is a great way to achieve our goal. Now - as good developers we want to write a unit test for our component. With Vitest and React Testing Library that one could look like this:
 
 ```javascript
 // src/components/UserList.test.tsx
@@ -69,9 +71,13 @@ test('should render a list of users from service', async (): Promise<void> => {
 });
 ```
 
-But running this test gives we get an error: `ReferenceError: fetch is not defined`. A quick search on Google for "vitest fetch" shows us that one solution could be to use an NPM package. I don't think that the propper solution is an NPM package. My main problem is that we use `fetch` inside the component. Therefore I'm going to show you a very simple way that enables us to rewrite our component to give us more control. This can be done using dependency injection with useContext.
+But running this test gives we get an error: `ReferenceError: fetch is not defined`. A quick search on Google for "vitest fetch" shows us that one solution could be to use an NPM package. I don't think that an NPM package is the propper solution for two reason:
+1. I'm generally against introducing NPM packages as solutions for problems
+2. Mocking the `fetch` functions seems a bit hacky.
 
-Lets start by adding a new file for the service functions:
+Therefore I'm going to show you a very simple way that enables us to rewrite our component to give us more control. We are going to move the service call out of the component and inject it into the component via dependency injection instead. This can be done with a React Context.
+
+Lets start by adding a new file for the service function:
 ```javascript
 // src/services/userService.ts
 
@@ -318,6 +324,8 @@ Why is this better than mocking the fetch function? In my opinion:
 - It is simpler and closer to the test. One can look down through the test case and read exactly what is the intention is.
 - It does not leave a tests with mocks that needs to be cleaned.
 - Does not require you to install NPM packages.
+
+***
 
 You can also use this for the stories in your Storybook files. Consider this story for our component:
 
