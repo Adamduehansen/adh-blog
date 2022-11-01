@@ -116,13 +116,13 @@ export default function UserServiceClientProvider({
   );
 }
 
-export function useUserServiceClient() {
+export function useUserServiceClient(): UserServiceClient {
   return useContext(UserServiceClientContext);
 }
 ```
 
 1. `UserServiceClientContext` is a React Context which contains the client of our service. The client should implement functions that are needed by our components.
-2. `UserServiceClientProvider` is a component that takes a client and exposes it as a provider.
+2. `UserServiceClientProvider` is a component that takes a client as a property and exposes it through a provider of the `UserServiceClientContext`.
 3. `useUserServiceClient` is a hook that uses the `UserServiceClientContext` context.
 
 Now go back to our UserList component and lets make a few changes:
