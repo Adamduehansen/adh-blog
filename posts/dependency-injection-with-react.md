@@ -325,6 +325,8 @@ Why is this better than mocking the fetch function? In my opinion:
 - It does not leave a tests with mocks that needs to be cleaned.
 - Does not require you to install NPM packages.
 
+***
+
 You can also use this for the stories in your Storybook files. Consider this story for our component:
 
 ```javascript
