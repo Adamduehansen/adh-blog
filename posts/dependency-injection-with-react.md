@@ -12,6 +12,8 @@ If you would like to just view the code, here is a link to the [example Github r
 
 ***
 
+# Introduction to the scenario
+
 Imagine that we want a component that renders a list of users fetched from a web service. One way of doing this could be to write the component like this:
 
 ```javascript
@@ -76,6 +78,8 @@ But running this test gives we get an error: `ReferenceError: fetch is not defin
 2. Mocking the `fetch` functions seems a bit hacky.
 
 Therefore I'm going to show you a very simple way that enables us to rewrite our component to give us more control. We are going to move the service call out of the component and inject it into the component via dependency injection instead. This can be done with a React Context.
+
+# Using React Context for dependency injection
 
 Lets start by adding a new file for the service function:
 ```javascript
@@ -219,7 +223,17 @@ test('should render a list of users from service', async (): Promise<void> => {
 });
 ```
 
-Our test now succeeds. Let's take a look at the full flexibility of our dependency injection. Let's add another two tests to ensure that our component:
+Our test now succeeds!
+
+Why is this better than mocking the fetch function? In my opinion:
+- It enforces us to separate business layer and view layer which makes our components much more clean.
+- It is simpler and closer to the test. One can look down through the test case and read exactly what is the intention is.
+- It does not leave a tests with mocks that needs to be cleaned.
+- Does not require you to install NPM packages.
+
+# Let's add some extra spices with more tests and Storybook stories
+
+Let's take a look at the full flexibility of our dependency injection. Let's add another two tests to ensure that our component:
 1. renders a message if the list of users is empty.
 2. renders a message if the service threw an exception.
 
@@ -327,14 +341,6 @@ Tests are now running and we've done some throughout testing of our component
 Test Files  1 passed (1)
      Tests  3 passed (3)
 ```
-
-Why is this better than mocking the fetch function? In my opinion:
-- It enforces us to separate business layer and view layer which makes our components much more clean.
-- It is simpler and closer to the test. One can look down through the test case and read exactly what is the intention is.
-- It does not leave a tests with mocks that needs to be cleaned.
-- Does not require you to install NPM packages.
-
-***
 
 You can also use this for the stories in your Storybook files. Consider this story for our component:
 
