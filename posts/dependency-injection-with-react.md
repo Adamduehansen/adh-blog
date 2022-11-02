@@ -12,7 +12,7 @@ If you would like to just view the code, here is a link to the [example Github r
 
 ***
 
-# Introduction to the scenario
+# Introduction to the Scenario
 
 Imagine that we want a component that renders a list of users fetched from a web service. One way of doing this could be to write the component like this:
 
@@ -79,7 +79,7 @@ But running this test gives we get an error: `ReferenceError: fetch is not defin
 
 Therefore I'm going to show you a very simple way that enables us to rewrite our component to give us more control. We are going to move the service call out of the component and inject it into the component via dependency injection instead. This can be done with a React Context.
 
-# Using React Context for dependency injection
+# Using React Context for Dependency Injection
 
 Lets start by adding a new file for the service function:
 ```javascript
@@ -231,7 +231,7 @@ Why is this better than mocking the fetch function? In my opinion:
 - It does not leave a tests with mocks that needs to be cleaned.
 - Does not require you to install NPM packages.
 
-# Let's add some extra spices with more tests and Storybook stories
+# Let's Add Some Extra Spices with more Tests and Storybook Stories
 
 Let's take a look at the full flexibility of our dependency injection. Let's add another two tests to ensure that our component:
 1. renders a message if the list of users is empty.
