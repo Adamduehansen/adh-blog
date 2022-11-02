@@ -352,11 +352,11 @@ export const Default: ComponentStory<typeof UserList> = function () {
     return [
       {
         id: 1,
-        username: 'Jane Doe',
+        username: 'jane-doe',
       },
       {
         id: 2,
-        username: 'John Smith',
+        username: 'john-smith',
       },
     ];
   }
