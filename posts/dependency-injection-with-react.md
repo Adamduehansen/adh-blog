@@ -73,11 +73,11 @@ test('should render a list of users from service', async (): Promise<void> => {
 });
 ```
 
-But running this test gives we get an error: `ReferenceError: fetch is not defined`. A quick search on Google for "vitest fetch" shows us that one solution could be to use an NPM package. I don't think that an NPM package is the propper solution for two reason:
-1. I'm generally try not to introduce NPM packages as solutions for problems
+But running this test gives us an error: `ReferenceError: fetch is not defined`. A quick search on Google for "vitest fetch" shows us that one solution could be to use an NPM package. I don't think that an NPM package is the propper solution for two reason:
+1. I generally try not to introduce NPM packages as solutions for problems
 2. Mocking the `fetch` functions seems a bit hacky.
 
-Therefore I'm going to show you a very simple way that enables us to rewrite our component to give us more control. We are going to move the service call out of the component and inject it into the component via dependency injection instead. This can be done with a React Context.
+Therefore I'm going to show you a very simple way that enables us to rewrite our component to give us more control. We are going to move the service call out of the component and inject it into the component via dependency injection. This can be done with React Context.
 
 # Using React Context for Dependency Injection
 
@@ -125,7 +125,7 @@ export function useUserServiceClient(): UserServiceClient {
 }
 ```
 
-1. `UserServiceClientContext` is a React Context which contains the client of our service. The client should implement functions that are needed by our components.
+1. `UserServiceClientContext` is a React Context which contains the functions that a client. The client should implement service functions that are needed by our components.
 2. `UserServiceClientProvider` is a component that takes a client as a property and exposes it through a provider of the `UserServiceClientContext`.
 3. `useUserServiceClient` is a custom hook that uses the `UserServiceClientContext` context.
 
@@ -169,7 +169,9 @@ function UserList(): JSX.Element {
 }
 ```
 
-The component now uses our custom hook `useUserServiceClient`. From this hook we can call `getUsers`. We also need to provide a client to   `UserServiceClientProvider` somewhere in the component tree. Lets do that at the root of the application:
+The component now uses our custom hook `useUserServiceClient`. From this hook we can use `getUsers`.
+
+We also need to provide a client to `UserServiceClientProvider` somewhere in the component tree. Lets do that at the root of the application:
 
 ```javascript
 // src/main.tsx
