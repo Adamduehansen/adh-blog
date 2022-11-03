@@ -74,7 +74,7 @@ test('should render a list of users from service', async (): Promise<void> => {
 ```
 
 But running this test gives us an error: `ReferenceError: fetch is not defined`. A quick search on Google for "vitest fetch" shows us that one solution could be to use an NPM package. I don't think that an NPM package is the propper solution for two reason:
-1. I generally try not to introduce NPM packages as solutions for problems
+1. Introducing an NPM package as a solution for the problem can lead to external complications and more maintanance.
 2. Mocking the `fetch` functions seems a bit hacky.
 
 Therefore I'm going to show you a very simple way that enables us to rewrite our component to give us more control. We are going to move the service call out of the component and inject it into the component via dependency injection. This can be done with React Context.
