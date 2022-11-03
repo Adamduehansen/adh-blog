@@ -140,7 +140,7 @@ function UserList(): JSX.Element {
 
   useEffect((): void => {
     async function fetchUsers(): Promise<void> {
-      const response = await getUsers(); <--
+      const response = await getUsers(); // <--
       setUsers(response);
     }
 
