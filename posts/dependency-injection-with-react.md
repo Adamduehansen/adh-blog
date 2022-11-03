@@ -5,14 +5,14 @@ publish_date: 0000-00-00
 In this post I'm going to show you how dependency injection can be achieved with React and how it can benefit the quality of your code.
 
 I'm going to assume two things:
-1. that you already know the concept behind dependency injection
+1. that you already know the concept of dependency injection
 2. how React Context and the useContext hook works
 
 If you would like to just view the code, here is a link to the [example Github repo](https://github.com/Adamduehansen/adh-blog/tree/draft/examples/dependency-injection).
 
 ***
 
-# Introduction to the Scenario
+# Introduction the problem
 
 Imagine that we want a component that renders a list of users fetched from a web service. One way of doing this could be to write the component like this:
 
@@ -125,7 +125,7 @@ export function useUserServiceClient(): UserServiceClient {
 }
 ```
 
-1. `UserServiceClientContext` is a React Context which contains the functions that a client. The client should implement service functions that are needed by our components.
+1. `UserServiceClientContext` is a React Context which contains the implementations of a client. The client functions can be used by our components.
 2. `UserServiceClientProvider` is a component that takes a client as a property and exposes it through a provider of the `UserServiceClientContext`.
 3. `useUserServiceClient` is a custom hook that uses the `UserServiceClientContext` context.
 
@@ -136,11 +136,11 @@ Now go back to our UserList component and lets make a few changes:
 
 function UserList(): JSX.Element {
   const [users, setUsers] = useState<User[]>([]);
-  const { getUsers } = useUserServiceClient();
+  const { getUsers } = useUserServiceClient(); // <--
 
   useEffect((): void => {
     async function fetchUsers(): Promise<void> {
-      const response = await getUsers();
+      const response = await getUsers(); <--
       setUsers(response);
     }
 
@@ -191,7 +191,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 );
 ```
 
-The application should now fetch and render the list of users again. We can now revisit the test case and make a custom implementation of a client to the  `UserServiceClientProvider`:
+The application should now fetch and render the list of users again. We can now revisit the test case and make a custom implementation of a client to the `UserServiceClientProvider`:
 
 ```javascript
 // src/components/UserList.test.tsx
@@ -230,10 +230,10 @@ Our test now succeeds!
 Why is this better than mocking the fetch function? In my opinion:
 - It enforces us to separate business layer and view layer which makes our components much more clean.
 - It is simpler and closer to the test. One can look down through the test case and read exactly what is the intention is.
-- It does not leave a tests with mocks that needs to be cleaned.
+- It does not leave the tests with mocks that needs to be cleaned.
 - Does not require you to install NPM packages.
 
-# Let's Add Some Extra Spices with more Tests and Storybook Stories
+# Let's Add Some Extra Spices With More Tests and Storybook Stories
 
 Let's take a look at the full flexibility of our dependency injection. Let's add another two tests to ensure that our component:
 1. renders a message if the list of users is empty.
@@ -336,7 +336,7 @@ function UserList(): JSX.Element {
 }
 ```
 
-Tests are now running and we've done some throughout testing of our component
+Tests are now running and we've done some throughout testing of our component.
 ```
  ✓ src/components/UserList.test.tsx (3)
 
@@ -375,4 +375,4 @@ export const Default: ComponentStory<typeof UserList> = function () {
 };
 ```
 
-This story does not care if there is a service to call. Even if the server should one day be unavailable, this story can still be viewed by other developers.
+This story is never dependend on the actual web service, and the full functionality of the component can always be viewed.
