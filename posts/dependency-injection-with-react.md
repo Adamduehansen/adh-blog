@@ -1,6 +1,6 @@
 ---
 title: Dependency Injection With React And How It Can Greatly Affect Your Code Quality
-publish_date: 0000-00-00
+publish_date: 2022-11-04
 ---
 In this post I'm going to show you how dependency injection can be achieved with React and how it can benefit the quality of your code.
 
@@ -8,7 +8,7 @@ I'm going to assume two things:
 1. that you already know the concept of dependency injection
 2. how React Context and the useContext hook works
 
-If you would like to just view the code, here is a link to the [example Github repo](https://github.com/Adamduehansen/adh-blog/tree/draft/examples/dependency-injection).
+If you would like to just view the code, here is a link to the [example Github repo](https://github.com/Adamduehansen/adh-blog/tree/main/examples/dependency-injection)).
 
 ***
 
