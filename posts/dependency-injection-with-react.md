@@ -8,7 +8,7 @@ I'm going to assume two things:
 1. that you already know the concept of dependency injection
 2. how React Context and the useContext hook works
 
-If you would like to just view the code, here is a link to the [example Github repo](https://github.com/Adamduehansen/adh-blog/tree/main/examples/dependency-injection)).
+If you would like to just view the code, here is a link to the [example Github repo](https://github.com/Adamduehansen/adh-blog/tree/main/examples/dependency-injection).
 
 ***
 
