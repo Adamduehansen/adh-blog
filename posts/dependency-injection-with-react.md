@@ -81,7 +81,7 @@ Therefore I'm going to show you a very simple way that enables us to rewrite our
 
 # Using React Context for Dependency Injection
 
-Lets start by adding a new file for the service function:
+Lets start by adding a new file and move the service function to this file:
 ```javascript
 // src/services/userService.ts
 
@@ -92,7 +92,7 @@ export async function getUsers(): Promise<User[]> {
 }
 ```
 
-Now add a new file. This file is going to contain a few interesting things:
+Now add another file. This file is going to contain a few interesting things:
 
 ```javascript
 // src/lib/UserServiceClientProvider.tsx
