@@ -1,5 +1,5 @@
 ---
-title: Dependency Injection With React And How It Can Greatly Affect Your Code Quality
+title: Dependency Injection With React And How It Can Greatly Improve Your Code Quality
 publish_date: 2022-11-04
 ---
 In this post I'm going to show you how dependency injection can be achieved with React and how it can benefit the quality of your code.
