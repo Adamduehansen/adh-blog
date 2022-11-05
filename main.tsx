@@ -5,7 +5,7 @@ import blog, { ga, redirects, h } from 'blog';
 blog({
   title: 'Hi, I\'m Adam!',
   description:
-    'I write monthly posts about stuff related to JavaScript.',
+    'I attempt to write monthly posts about JavaScript stuff.',
   // header: <header>Your custom header</header>,
   // section: <section>Your custom section</section>,
   // footer: <footer>Your custom footer</footer>,
