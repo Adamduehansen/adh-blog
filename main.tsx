@@ -16,7 +16,8 @@ blog({
   links: [
     { title: "Email", url: "mailto:adamduehan@gmail.com" },
     { title: "GitHub", url: "https://github.com/adamduehansen" }, 
-  ]
+  ],
+  readtime: true,
   
   // middlewares: [
 
