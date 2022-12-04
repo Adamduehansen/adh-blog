@@ -1,19 +1,19 @@
 ---
 title: Working With tests in JavaScript
-publish_date: 2022-10-25
+publish_date: 2022-12-04
 ---
 
-I'm a huge fan of tests! I think that writing tests helps you create better and more robust code, and it helps to ensure that bugs are not deployed to production.
+I'm a huge fan of tests! I think that writing tests helps you create better and more maintainable code, and it helps to ensure that bugs are not deployed to production.
 
-In this post I am going to introduce how tests can be written with JavaScript and some tips on how to structure them. These tests are written with Vitests, but many other frameworks, such as Jest, works in a very similar way.
+In this post I am going to introduce how tests can be written with JavaScript, some essential tools, and some tips on writing tests. These tests are written with Vitests, but many other frameworks, such as Jest, works in a very similar way.
+
+A full example of tests in use can be found in this example repo
 
 # The Basic Structure of a Test in JavaScript
 
 To create a test suite, first create a *module*.test.ts file (*module* should be the name of the module to test). In this file we are going to group our tests with a `describe` function.
 
 ```javascript
-// file.test.ts
-
 describe("module", (): void => {
   // tests ...
 });
@@ -26,8 +26,6 @@ The `describe` function takes two arguments:
 Inside the function we can create multiple tests:
 
 ```javascript
-// file.test.ts
-
 describe("module", (): void => {
   test("testname", (): void => {
     // synchronous test
@@ -46,8 +44,6 @@ As with `describe`, the `test` function takes two arguments:
 If needed, a test can be fed with a data set so that it can be ran multiple times with different input:
 
 ```javascript
-// file.test.ts
-
 describe("module", (): void => {
   test.each([
     ["any-input"],
@@ -65,10 +61,8 @@ describe("module", (): void => {
 To run assertions we use the `expect` function.
 
 ```javascript
-// file.test.ts
-
 describe("module", (): void => {
-  test("testname", (input: string): void => {
+  test("testname", (): void => {
     expect(2 + 2).toEqual(4);
     expect(true).toBeTruthy();
     expect(() => { throw new Error("Error!") }).toThrow();
@@ -76,11 +70,9 @@ describe("module", (): void => {
 });
 ```
 
-For some test cases we may need to do some work before and after all or each test. To this we have `beforeEach`, `beforeAll`, `afterEach`, `afterAll`.
+For some test cases we may need to do some work before and after all or each test. To do this we have `beforeEach`, `beforeAll`, `afterEach`, `afterAll`.
 
 ```javascript
-// file.test.ts
-
 describe("module", (): void => {
   beforeEach(() => {
     // Runs before each test
@@ -107,8 +99,6 @@ describe("module", (): void => {
 Tests can be skipped with the `.skip` function on `test` function.
 
 ```javascript
-// file.test.ts
-
 describe("module", (): void => {
   test.skip("testname", (): void => { /* ... */ });
 });
@@ -154,22 +144,23 @@ describe("stringUtilities", (): void => {
 I recommend dividing your code into three sections: Arrange, Act and Assert. It is a very easy way to set up your test, which creates a simple overview of the test.
 
 ```javascript
-// ...
+describe("module", (): void => {
+  test("some test", () => {
+    // Arrange
+    const expectedName = "Hello, World!";
 
-test("some test", () => {
-  // Arrange
+    // Act
+    const actualName = createGreetingsMessage("World");
 
-  // Act
-
-  // Assert
+    // Assert
+    expect(actualName).toEqual(expectedName);
+  });
 });
-
-// ...
 ```
 
 ### Avoid SetUp and TearDown Functions
 
-In my opinion, setup and teardown functions are a symptom of developers trying to write production code in their tests. As developers, we tend to want to be "smart" in our code and put repetitive lines of code in one place. But this mindset can lead to frustration when writing and reviewing tests. Each test should contain exactly what the test needs. Consider the following:
+In my opinion, setup and teardown functions are a symptom of developers trying to write their test code as they would write their production code. As developers, we tend to want to be "smart" in our code and put repetitive lines of code in one place. But this mindset can lead to frustration when writing and reviewing tests. Each test should contain exactly what the test needs. Consider the following:
 
 ```javascript
 describe("person", (): void => {
@@ -243,9 +234,9 @@ describe("person", (): void => {
 
 But in my opinion we've just made these tests much more harder to review.
 
-First, the reviewer now needs to know that a `person` object exists somewhere in my file, but I know nothing of it by just looking at the test.
+First, the reviewer now needs to know that a `person` object exists somewhere in my file, but knows nothing of it by just looking at the test.
 
-Secondly, I have less control of this object since it is created outside my test. I could do something like this:
+Secondly, we now have less control og the object since it is created outside my test. I could do something like this:
 
 ```javascript
 // ...
@@ -263,7 +254,7 @@ test("should determine if person is an adult", () => {
 
 // ...
 ```
-but that feels kinda awkward to me because I still have no idea of where the `person` variable comes from.
+This ensures that the age property of the `person` variable always have the value of 30. This feels kinda awkward to me though, because I still have no idea of where the `person` variable comes from.
 
 Thirdly, if the test case contains many tests one may have to scroll up and down in the file, causing the reader to switch context, forgetting the task at hand, and perhaps getting lost in the file.
 
