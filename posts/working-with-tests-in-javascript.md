@@ -7,7 +7,7 @@ I'm a huge fan of tests! I think that writing tests helps you create better and 
 
 In this post I am going to introduce how tests can be written with JavaScript, some essential tools, and some tips on writing tests. These tests are written with Vitests, but many other frameworks, such as Jest, works in a very similar way.
 
-A full example of tests in use can be found in this example repo
+A full example of tests in use can be found in [this example repo](https://github.com/Adamduehansen/adh-blog/tree/main/examples/working-with-tests-in-javascript).
 
 # The Basic Structure of a Test in JavaScript
 
